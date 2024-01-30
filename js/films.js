@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", getData);
+
+getData();
 
 async function getData() {
     try {
@@ -10,10 +11,9 @@ async function getData() {
         }
 
         const data = await response.json();
-        console.log(data)
         displayMovies(data)
     } catch (error) {
-        console.log('Error: ' + err);
+        console.log('Error: ' + error);
     }
 }
 
@@ -21,51 +21,39 @@ function checkParity(number) {
     return number % 2 === 0 ? "Odd" : "Even"
 }
 
-function displayMovies(films) {
+function displayfilm(firstBlock, senodBlock, film) {
+    const filmImage = document.createElement('img');
+    filmImage.classList.add('gallery__item');
+    filmImage.src = film.img;
+    firstBlock.appendChild(filmImage);
 
+    if (film.text) {
+        const filmBlock = document.createElement('div');
+        const filmName = document.createElement('h2');
+        const filmText = document.createElement('p');
+        filmBlock.className += "text-block gallery__item";
+        filmName.classList.add('text-block__h');
+        filmText.classList.add('text-block__p');
+        filmName.innerHTML = film.name;
+        filmText.innerHTML = film.text;
+
+        filmBlock.append(filmName, filmText);
+        senodBlock.append(filmBlock);
+    }
+}
+
+function displayMovies(films) {
     const leftBlock = document.querySelector('.gallery__left');
     const rightBlock = document.querySelector('.gallery__right');
 
     for (let index = 0; index < films.length; index++) {
         if (checkParity(index) == 'Odd') {
-            const filmImage = document.createElement('img');
-            filmImage.classList.add('gallery__item');
-            filmImage.src = films[index].img;
-            leftBlock.appendChild(filmImage);
-
-            if (films[index].text) {
-                const filmBlock = document.createElement('div');
-                const filmName = document.createElement('h2');
-                const filmText = document.createElement('p');
-                filmBlock.className += "text-block gallery__item";
-                filmName.classList.add('text-block__h');
-                filmText.classList.add('text-block__p');
-                filmName.innerHTML = films[index].name;
-                filmText.innerHTML = films[index].text;
-
-                filmBlock.append(filmName, filmText);
-                rightBlock.append(filmBlock);
-            }
+            displayfilm(leftBlock, rightBlock, films[index])
         }
         else {
-            const filmImage = document.createElement('img');
-            filmImage.classList.add('gallery__item');
-            filmImage.src = films[index].img;
-            rightBlock.appendChild(filmImage);
+            displayfilm(rightBlock, leftBlock, films[index])
 
-            if (films[index].text) {
-                const filmBlock = document.createElement('div');
-                const filmName = document.createElement('h2');
-                const filmText = document.createElement('p');
-                filmBlock.className += "text-block gallery__item";
-                filmName.classList.add('text-block__h');
-                filmText.classList.add('text-block__p');
-                filmName.innerHTML = films[index].name;
-                filmText.innerHTML = films[index].text;
-
-                filmBlock.append(filmName, filmText);
-                leftBlock.append(filmBlock);
-            }
         }
     }
+    addAnimations();
 }

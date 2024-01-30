@@ -53,7 +53,6 @@ body {
 .main-title {
     font-size: calc(var(--index) * 8);
     position: absolute;
-    width: min-content;
     width: 60vw;
     bottom: 12vh;
     line-height: .9;
@@ -61,7 +60,7 @@ body {
 
 .gallery {
     display: flex;
-    padding: calc(var(--index) * 8) 0;
+    padding-top: calc(var(--index) * 8);
 }
 
 .gallery>* {
