@@ -3,7 +3,7 @@ getData();
 
 async function getData() {
     try {
-        const response = await fetch('https://andreyfux.github.io/ApiMovie/films.json');
+        const response = await fetch('https://andreyfux.github.io/top_films/films.json');
 
         if (!response.ok) {
             const message = 'Error with Status Code: ' + response.status;
